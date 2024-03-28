@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTubeビデオダウンローダー - ToURL</title>
+<meta name="description" content="広告なし、安全、高速、オンラインのYouTubeからmp4またはmp3への変換、ToURL提供。">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f4;
+    }
+    .container {
+        display: flex;
+        width: 80%;
+        height: 70%;
+        max-width: 1000px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+    .input-container {
+        flex: 1;
+        padding: 20px;
+    }
+    .input-container input {
+        width: 100%;
+        height: 40px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+    .input-container button {
+        width: 100%;
+        padding: 10px;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .input-container input, .input-container button {
+        box-sizing: border-box;
+    }
+
+    .output-container {
+        flex: 1;
+        padding: 20px;
+        background-color: #f9f9f9;
+        animation: slideIn 0.5s forwards;
+        transform: translateX(-50%);
+    }
+
+    @keyframes slideIn {
+        0% {
+            transform: translateX(-50%);
+        }
+        100% {
+            transform: translateX(0);
+        }
+    }
+
+    .output-container button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .output-container button:hover {
+        background-color: #45a049;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="input-container">
+        
+        <h2>YouTubeビデオ変換</h2>
+        <form method="post">
+            <input type="text" id="youtubeUrl" placeholder="YouTubeのURLを入力" name="YoutubeURL" value="{{ youtube_url }}" autocomplete="off" required>
+            <button type="submit" name="search">ビデオまたはオーディオに変換</button>
+        </form>
+    </div>
+    {% if URL %}
+    <div class="output-container">
+        <div style="display: flex; align-items: center;">
+            <img style="max-width: 120px;" src="{{ image_url }}">
+            <a style="padding-left: 10px; text-overflow: clip; font-size: 24px; font-weight: bold;">{{ title }}</a>
+        </div>
+        <hr style="margin: 20px;">
+        <div style="text-align: center;">
+            <form method="post">
+                <input type="hidden" name="youtube_url" value="{{ youtube_url }}">
+                <button style="background-color: #008cff;" name="Download_Video" type="submit">ビデオをダウンロード</button>
+                <button style="background-color: #45a049;" name="Download_Audio" type="submit">オーディオをダウンロード</button>
+                <br>
+                <br>
+                <a style="color: #969696;">両方とも最高品質のダウンロードが選択されています。別途選択する必要はありません。</a>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+</div>
+<div id="loadingModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+    <div style="background-color: white; padding: 20px; border-radius: 10px; text-align: center;">
+        <p>お待ちください...</p>
+    </div>
+</div>
+
+<script>
+    window.onload = function() {
+        
+        var downloadVideoButton = document.querySelector('button[name="Download_Video"]');
+        var downloadAudioButton = document.querySelector('button[name="Download_Audio"]');
+        
+        downloadVideoButton.addEventListener("click", function() {
+            
+            document.getElementById('loadingModal').style.display = 'flex';
+            
+            setTimeout(function() {
+                
+                document.getElementById('loadingModal').style.display = 'none';
+            }, 2000); 
+        });
+    
+        downloadAudioButton.addEventListener("click", function() {
+            
+            document.getElementById('loadingModal').style.display = 'flex';
+            
+            setTimeout(function() {
+                
+                document.getElementById('loadingModal').style.display = 'none';
+            }, 2000); 
+        });
+    };
+    </script>
+
+</body>
+</html>
